@@ -1,3 +1,4 @@
+ninja
 numpy
 pycuda
 ipdb

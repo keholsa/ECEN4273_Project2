@@ -1,4 +1,2 @@
-ninja
-numpy
-pycuda
-ipdb
+numpy==1.26.2
+pycuda==2021.1.1

@@ -19,7 +19,8 @@ pipeline {
             steps {
                 script {
                     // Activate the virtual environment and install dependencies
-                    sh 'venv\\Scripts\\activate && pip install -r requirements.txt'
+                    def activateScript = isUnix() ? 'venv/bin/activate' : 'venv\\Scripts\\activate'
+                    sh "source $activateScript && pip install -r requirements.txt"
                 }
             }
         }
@@ -28,7 +29,8 @@ pipeline {
             steps {
                 script {
                     // Execute your tests or build commands here
-                    sh 'venv\\Scripts\\activate && python your_script.py'
+                    def activateScript = isUnix() ? 'venv/bin/activate' : 'venv\\Scripts\\activate'
+                    sh "source $activateScript && python your_script.py"
                 }
             }
         }

@@ -24,18 +24,21 @@ pipeline {
             }
         }
 
-        // stage('Test'){
-        //     steps{
-        //         script{
-        //         }
-        //     }
-        // }
+        stage('Run Tests') {
+            steps {
+                script {
+                    sh 'pytest --verbose'
+                }
+            }
+        }
 
         stage('Deployment'){
             steps{
                 script{
-                     sh 'docker build -t project2cd .'
-                     sh 'docker run -it project2cd'
+
+                    // enable docker commands in jenkins
+                     // sh 'docker build -t project2cd .'
+                     // sh 'docker run -it project2cd'
                      }
                 }
             }

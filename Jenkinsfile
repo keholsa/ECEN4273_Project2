@@ -12,8 +12,8 @@ pipeline {
         steps {
             script {
                 sh 'python3 -m venv venv'
-                sh 'chmod +x venv/bin/activate' // Add this line to make activate script executable
-                sh 'venv/bin/activate'
+                sh 'path/to/venv/bin/python'
+                sh 'path/to/venv/bin/pip'
             }
         }
     }

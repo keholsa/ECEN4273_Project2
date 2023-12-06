@@ -32,81 +32,83 @@ mod = SourceModule("""
             int y = tid * 2 + 1; //the index of a goat's x position on the grid
 
 
-            if(randDir == 0) { //Move 1 in the right-direction
-            positionsPrev[x] = positions[x]; //first update the previous position array with the current positions
-            positionsPrev[y] = positions[y];
 
-            positions[x] = positions[x]; //then update the position array with the first try positions
-            positions[y] = positions[y] + 1; //y needs to increase here to move goat to the right on the grid because the grid is x = rows(actualycoord), y = columns(actualxcoord)
+                if(randDir == 0) { //Move 1 in the right-direction
+                positionsPrev[x] = positions[x]; //first update the previous position array with the current positions
+                positionsPrev[y] = positions[y];
 
-            if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position ALSO note that x and y are flipped due to accessing the grid array which is stored flipped
-                positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
-                positions[y] = positionsPrev[y];
-            }
-            else{ //update the grid now for ONLY those threads that can move
-                grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
-                grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
-            }
+                positions[x] = positions[x]; //then update the position array with the first try positions
+                positions[y] = positions[y] + 1; //y needs to increase here to move goat to the right on the grid because the grid is x = rows(actualycoord), y = columns(actualxcoord)
 
-                //if statement for making sure two goats didn't collide? 3 + 3 = 6
-                //this should never happen because all the goats try to move in the same direction every iteration, so they will never end up moving into the same spot.
-            }
+                    if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position ALSO note that x and y are flipped due to accessing the grid array which is stored flipped
+                        positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
+                        positions[y] = positionsPrev[y];
+                    }
+                    else{ //update the grid now for ONLY those threads that can move
+                        grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
+                        grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
+                    }
 
-
-            if(randDir == 1) { //Move 1 in the left-direction
-            positionsPrev[x] = positions[x];
-            positionsPrev[y] = positions[y];
-
-            positions[x] = positions[x];
-            positions[y] = positions[y] - 1;
-
-            if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
-                positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
-                positions[y] = positionsPrev[y];
-            }
-            else{ //update the grid now for ONLY those threads that can move
-                grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
-                grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
-            }
-            }
+                    //if statement for making sure two goats didn't collide? 3 + 3 = 6
+                    //this should never happen because all the goats try to move in the same direction every iteration, so they will never end up moving into the same spot.
+                }
 
 
-            if(randDir == 2) { //Move 1 in the up direction (-x due to grid)
-            positionsPrev[x] = positions[x];
-            positionsPrev[y] = positions[y];
+                if(randDir == 1) { //Move 1 in the left-direction
+                positionsPrev[x] = positions[x];
+                positionsPrev[y] = positions[y];
 
-            positions[x] = positions[x] - 1;
-            positions[y] = positions[y];
+                positions[x] = positions[x];
+                positions[y] = positions[y] - 1;
 
-            if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
-                positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
-                positions[y] = positionsPrev[y];
-            }
-            else{ //update the grid now for ONLY those threads that can move
-                grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
-                grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
-            }
-            }
+                    if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
+                        positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
+                        positions[y] = positionsPrev[y];
+                    }
+                    else{ //update the grid now for ONLY those threads that can move
+                        grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
+                        grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
+                    }
+                }
 
 
-            if(randDir == 3) { //Move 1 in the down direction (+x)
-            positionsPrev[x] = positions[x];
-            positionsPrev[y] = positions[y];
+                if(randDir == 2) { //Move 1 in the up direction (-x due to grid)
+                positionsPrev[x] = positions[x];
+                positionsPrev[y] = positions[y];
 
-            positions[x] = positions[x] + 1;
-            positions[y] = positions[y];
+                positions[x] = positions[x] - 1;
+                positions[y] = positions[y];
 
-            if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
-                positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
-                positions[y] = positionsPrev[y];
-            }
-            else{ //update the grid now for ONLY those threads that can move
-                grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
-                grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
-            }
-            }
+                    if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
+                        positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
+                        positions[y] = positionsPrev[y];
+                    }
+                    else{ //update the grid now for ONLY those threads that can move
+                        grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
+                        grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
+                    }
+                }
+
+
+                if(randDir == 3) { //Move 1 in the down direction (+x)
+                positionsPrev[x] = positions[x];
+                positionsPrev[y] = positions[y];
+
+                positions[x] = positions[x] + 1;
+                positions[y] = positions[y];
+
+                    if(grid[(positions[x] * GRID_SIZE) + positions[y]] == 1 || grid[(positions[x] * GRID_SIZE) + positions[y]] == 3){ //Don't move there as that is either a fence, or another goat's fallback position
+                        positions[x] = positionsPrev[x]; //reset the goat's positions to their previous ones
+                        positions[y] = positionsPrev[y];
+                    }
+                    else{ //update the grid now for ONLY those threads that can move
+                        grid[(positions[x] * GRID_SIZE) + positions[y]] = 3; //updates the grid position with a new goat if there was no previous goat last iteration
+                        grid[(positionsPrev[x] * GRID_SIZE) + positionsPrev[y]] = 0; //Only sets the goats that moved previous position to 0
+                    }
+                }
 
         }
+
     }
 """)
 
@@ -141,7 +143,7 @@ class Goat:
         grid_device = gpuarray.to_gpu(grid.flatten()) #flattens the 2d grid array of goat positions and fence positions into a 1d position array for easier transfer to gpu can undo with myArray.reshape(rows, columns) later
 
         # Move Goat towards the exit on GPU
-        block_size = 128 #number of rows of threads per block
+        block_size = 4 #number of rows of threads per block
         grid_size = (num_Goat + block_size - 1) // block_size #number of blocks per Gpu grid
 
         #get a random direction choice to try first
@@ -154,18 +156,29 @@ class Goat:
         move_towards_exit_gpu(grid_device, positions_device, positionsPrev_device, np.int32(trydirection), np.int32(num_Goat), np.int32(GRID_SIZE),np.int32(exit_position[1]), block=(block_size, 1, 1), grid=(grid_size, 1), stream=stream)
 
         # Synchronize the stream to ensure completion so that the gpu completes all of the calculations and then waits for all the goats position vectors to get to the same spot in the calculation so that some goats don't get ahead in the number of iterations over other goats.        stream.synchronize()
+        stream.synchronize()
+
         # Copy updated position data back from GPU asynchronously because some gpu threads can complete faster than others, for example if there are if statements, then the gpu will break up the process and calculate the first half of threads that went one way, and then process the other threads that went the other way. the first set would have already been completed, while the 2nd was still finishing the calculations
         positions_host = positions_device.get(stream=stream)
+
+        # Free GPU memory
+        positions_device.gpudata.free()
 
         # Copy updated previous position data back from GPU
         positionsPrev_host = positionsPrev_device.get(stream=stream)
 
+        # Free GPU memory
+        positionsPrev_device.gpudata.free()
+
         # Copy updated grid data back from GPU
         newGrid = grid_device.get(stream=stream).reshape(GRID_SIZE, GRID_SIZE)
 
+        # Free GPU memory
+        grid_device.gpudata.free()
+
         # Update the Goat objects with the new positions
         for i, goat in enumerate(Goat_list):
-            goat.xPrev, goat.yPrev = goat.x, goat.y
+            goat.xPrev, goat.yPrev = positionsPrev_host[i * 2], positionsPrev_host[i * 2 + 1]
             goat.x, goat.y = positions_host[i * 2], positions_host[i * 2 + 1]
 
         return newGrid
@@ -176,25 +189,79 @@ class Goat:
 
 
 # Create a list of Goat
-num_Goat = 3 #FIXME!!!!!!!!!! make back to required amount of goats goats later after testing
-Goat_list = [Goat(random.randint(1, GRID_SIZE - 2), random.randint(1, GRID_SIZE - 2)) for _ in range(num_Goat)] #doesn't check if there is a goat already positioned there FIXME!!!!!!!!!!!!!!!! <----------------------------------------------------
+num_Goat = 120
+Goat_list = []
+
+# List of available goat locations
+available_positions = [(x, y) for x in range(1, GRID_SIZE - 1) for y in range(1, GRID_SIZE - 1) if grid[x, y] == 0]
+
+# Ensure you have enough available positions for the desired number of goats
+if len(available_positions) < num_Goat:
+    raise ValueError("Not enough available positions for goats.")
+
+# Randomly select positions from the available positions
+selected_positions = random.sample(available_positions, num_Goat)
+
+# Create Goat objects at the selected positions
+for position in selected_positions:
+    x, y = position
+    Goat_list.append(Goat(x, y))
+
+
+
+
+# Specify the CSV file path
+csv_file_path = "GoatOutput.csv"
+
+with open(csv_file_path, mode='w', newline='') as file: #resets the csv file every time the program is run
+    writer = csv.writer(file)
+    writer.writerow([])
+
+# Function to convert a goat to a CSV string
+def goat_to_csv_string(goat, goat_number):
+    return [f"Goat ID: {goat}", f"X: {goat.y}", f"Y: {goat.x}", ""]
+
+
+
 
 # Main simulation loop
 iteration = 0
+csvIteration = 0
+csvNumGoat = num_Goat
 while num_Goat > 0:
   # printing the list using loop
-  for x in range(len(Goat_list)):
-    print(f"Goat {x}: XCoord: {Goat_list[x].y} YCoord: -{Goat_list[x].x}") #again, y is x and x is y
+  #for x in range(len(Goat_list)):
+    #print(f"Goat {x}: XCoord: {Goat_list[x].y} YCoord: -{Goat_list[x].x}") #again, y is x and x is y
 
   iteration += 1
 
+  #QUICK FIX hopefully for the edges turning to 0s randomly, if we find why this happens we can get rid of this...
+  # Set edges to 1 where the value is not 2
+  grid[0, grid[0, :] != 2] = 1  # Top edge
+  grid[-1, grid[-1, :] != 2] = 1  # Bottom edge
+  grid[:, 0][grid[:, 0] != 2] = 1  # Left edge
+  grid[:, -1][grid[:, -1] != 2] = 1  # Right edge
+
+  # Iterate and continuously append data horizontally
+  new_data = []
+  for index, goat in enumerate(Goat_list):
+    csv_string = goat_to_csv_string(goat, index + 1)
+    new_data.append(csv_string)
+
+  iterationData = [["Iteration:", f"{iteration}"]]
+  # Append new columns to the CSV file
+  with open(csv_file_path, mode='a', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(iterationData)
+    writer.writerows(map(list, zip(*new_data)))
+
+
   # Move Goat towards the exit and check if they are next to it
-  #error here
-  #print(Goat_list)
   print(grid)
   print(f"Exit Position: ({exit_position[1]}, -{exit_position[0]})")
   print(f"Number of Goats: {num_Goat}")
   grid = Goat.move_towards_exit(Goat_list) #passes in the list of goats and returns the updated grid after modifying the goats positions and handling collisions in cuda
+
   for goat in Goat_list:
     if Goat.is_on_exit(goat):
         Goat_list.remove(goat)

@@ -10,7 +10,7 @@ pipeline {
 
         stage('Import Library(s)'){
             steps{
-                sh 'pip install -r requirements.txt'
+                sh 'pipx install -r requirements.txt'
             }
         }
         

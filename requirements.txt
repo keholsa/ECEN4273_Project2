@@ -1,2 +1,2 @@
-pip install path/to/numpy-1.26.2-cp39-cp39-win_amd64.whl
-pycuda==2021.1.1
+numpy
+pycuda

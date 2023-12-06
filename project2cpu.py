@@ -1,5 +1,6 @@
 import random
 
+# adding comment
 # Constants
 GRID_SIZE = 13
 

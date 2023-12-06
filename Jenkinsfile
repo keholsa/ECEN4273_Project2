@@ -7,6 +7,12 @@ pipeline {
                 checkout scm
             }
         }
+
+        stage('Add Dependancies'){
+            steps{
+                sh 'pipx install pygame'
+            }
+        }
         
         stage('Build') {
             steps {

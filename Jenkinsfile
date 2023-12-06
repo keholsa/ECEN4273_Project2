@@ -8,11 +8,11 @@ pipeline {
             }
         }
 
-        stage('Add Dependancies'){
-            steps{
-                sh 'pipx install pygame'
-            }
-        }
+        // stage('Add Dependancies'){
+        //     steps{
+        //         sh 'pipx install pygame'
+        //     }
+        // }
         
         stage('Build CPU w/o GUI') {
             steps {

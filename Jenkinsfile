@@ -18,6 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    // Assuming your Python files are in the root of the project
                     sh 'python3 project2cpu.py'
                     sh 'python3 project2cpu_gui.py'
                 }
@@ -32,15 +33,21 @@ pipeline {
             }
         }
 
-        stage('Deployment'){
-            steps{
-                script{
-
-                    // enable docker commands in jenkins
-                     // sh 'docker build -t project2cd .'
-                     // sh 'docker run -it project2cd'
-                     }
+        stage('Deployment') {
+            steps {
+                script {
+                    // Uncomment the following lines if you want to build and run a Docker container
+                    // sh 'docker build -t project2cd .'
+                    // sh 'docker run -it project2cd'
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'All stages passed! Deployment complete...'
+            // You can add additional steps or notifications here
+        }
     }
 }

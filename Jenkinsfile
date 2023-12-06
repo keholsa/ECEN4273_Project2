@@ -31,7 +31,6 @@ pipeline {
                    for (int i = 1; i <= 100; i++) {
                         echo "Running iteration ${i}"
                         sh 'python3 project2cpu.py'
-                        sh 'python3 project2cpu_gui.py'
                     }
                 }
             }

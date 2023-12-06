@@ -8,6 +8,12 @@ pipeline {
             }
         }
 
+        stage('Import Library(s)'){
+            steps{
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        
         stage('Build') {
             steps {
                 script {

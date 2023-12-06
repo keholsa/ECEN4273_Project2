@@ -1,2 +1,2 @@
 numpy
-pycuda
+w

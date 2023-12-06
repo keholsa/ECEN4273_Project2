@@ -8,24 +8,36 @@ pipeline {
             }
         }
 
-        stage('Add Dependancies'){
+        stage('Add Dependencies'){
             steps{
+                sh 'pip install numpy --break-system-packages'
                 sh 'pip install pygame --break-system-packages'
             }
         }
         
-        stage('Build CPU w/o GUI') {
+        stage('Build') {
             steps {
                 script {
                     sh 'python3 project2cpu.py'
+                    sh 'python3 project2cpu_gui.py'
                 }
             }
         }
 
-        stage('Build CPU w/ GUI'){
+        // stage('Test'){
+        //     steps{
+        //         script{
+        //         }
+        //     }
+        // }
+
+        stage('Deployment'){
             steps{
-                sh 'python3 project2cpu_gui.py'
+                script{
+                     sh 'docker build -t project2cd .'
+                     sh 'docker run -it project2cd'
+                     }
+                }
             }
-        }
     }
 }

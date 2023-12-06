@@ -11,23 +11,23 @@ pipeline {
             }
         }
         
-        stage('Install Python and Pip') {
-            steps {
-                script {
-                    sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-                    sh 'python3 get-pip.py'
+        // stage('Install Python and Pip') {
+        //     steps {
+        //         script {
+        //             sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
+        //             sh 'python3 get-pip.py'
                     
-                    sh 'pip install --upgrade pip'
-                    sh 'pip install --upgrade setuptools'
-                }
-            }
-        }
+        //             sh 'pip install --upgrade pip'
+        //             sh 'pip install --upgrade setuptools'
+        //         }
+        //     }
+        // }
         
         
         stage('Establishing virtual env'){
             steps{
                 script{
-                sh 'python3 -m venv venv'
+                sh 'python -m venv venv'
                 sh 'source venv/bin/activate'
             
                 }

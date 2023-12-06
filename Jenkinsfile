@@ -33,15 +33,15 @@ pipeline {
             }
         }
 
-        stage('Deployment') {
-            steps {
-                script {
-                    // Uncomment the following lines if you want to build and run a Docker container
-                    // sh 'docker build -t project2cd .'
-                    // sh 'docker run -it project2cd'
-                }
-            }
-        }
+        // stage('Deployment') {
+        //     steps {
+        //         script {
+        //             // Uncomment the following lines if you want to build and run a Docker container
+        //             // sh 'docker build -t project2cd .'
+        //             // sh 'docker run -it project2cd'
+        //         }
+        //     }
+        // }
     }
 
     post {

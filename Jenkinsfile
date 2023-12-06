@@ -7,12 +7,6 @@ pipeline {
                 checkout scm
             }
         }
-
-        stage('Import Library(s)'){
-            steps{
-                sh 'pipx install random'
-            }
-        }
         
         stage('Build') {
             steps {

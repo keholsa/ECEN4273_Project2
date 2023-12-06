@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Activate the virtual environment and install dependencies
-                    bat 'venv\\Scripts\\activate.bat && pip install -r requirements.txt'
+                    sh 'venv\\Scripts\\activate && pip install -r requirements.txt'
                 }
             }
         }
@@ -28,10 +28,11 @@ pipeline {
             steps {
                 script {
                     // Execute your tests or build commands here
-                    bat 'venv\\Scripts\\activate.bat && python your_script.py'
+                    sh 'venv\\Scripts\\activate && python your_script.py'
                 }
             }
         }
+
     }
 }
 

@@ -8,28 +8,32 @@ pipeline {
             }
         }
 
-    stage('Establishing virtual env') {
-        steps {
-            script {
-                sh 'python3 -m venv venv'
-                sh 'path/to/venv/bin/python'
-                sh 'path/to/venv/bin/pip'
-            }
-        }
-    }
-
-        stage('Dependencies') {
+        stage('Establishing Virtual Environment') {
             steps {
                 script {
-                    sh 'pip install -r requirements.txt'
+                    sh 'python -m venv venv'
                 }
             }
         }
 
-        stage('Build') {
+        stage('Activate Virtual Environment and Install Dependencies') {
             steps {
-                sh 'python3 project2.py'
+                script {
+                    // Activate the virtual environment and install dependencies
+                    sh 'source venv/bin/activate && pip install -r requirements.txt'
+                }
             }
         }
+
+        stage('Run Tests or Build') {
+            steps {
+                script {
+                    // Execute your tests or build commands here
+                    sh 'source venv/bin/activate && python project2.py'
+                }
+            }
+        }
+
     }
 }
+

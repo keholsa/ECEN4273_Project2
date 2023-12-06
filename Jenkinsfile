@@ -13,7 +13,7 @@ pipeline {
             script {
                 sh 'python3 -m venv venv'
                 sh 'chmod +x venv/bin/activate' // Add this line to make activate script executable
-                sh 'source venv/bin/activate'
+                sh 'venv/bin/activate'
             }
         }
     }

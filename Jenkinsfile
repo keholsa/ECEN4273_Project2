@@ -10,7 +10,7 @@ pipeline {
 
         stage('Add Dependancies'){
             steps{
-                sh 'pip install pygame'
+                sh 'pip install pygame --break-system-packages'
             }
         }
         
